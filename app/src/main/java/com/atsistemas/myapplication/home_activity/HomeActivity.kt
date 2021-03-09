@@ -1,4 +1,4 @@
-package com.atsistemas.myapplication.home_activity.ui
+package com.atsistemas.myapplication.home_activity
 
 import android.os.Bundle
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.atsistemas.myapplication.R
+import com.atsistemas.myapplication.commons.BaseActivity
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,7 +5,7 @@ import com.atsistemas.myapplication.commons.BaseActivity
 import com.atsistemas.myapplication.commons.Constants
 import com.atsistemas.myapplication.commons.removeFirstLastChar
 import com.atsistemas.myapplication.databinding.ActivitySplashBinding
-import com.atsistemas.myapplication.home_activity.ui.HomeActivity
+import com.atsistemas.myapplication.home_activity.HomeActivity
 import org.jetbrains.anko.startActivity
 
 /**

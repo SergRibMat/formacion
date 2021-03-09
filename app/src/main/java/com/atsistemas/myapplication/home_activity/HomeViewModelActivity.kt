@@ -1,4 +1,4 @@
-package com.atsistemas.myapplication.home_activity.vm
+package com.atsistemas.myapplication.home_activity
 
 import com.atsistemas.myapplication.commons.BaseViewModel
 

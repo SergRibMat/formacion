@@ -90,4 +90,13 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+
+    <string name="string_date">30 APR</string>
+    <string name="txt_title_fee">Fee</string>
+    <string name="txt_value_fee">-5,4</string>
+    <string name="txt_value_amount">-60,35</string>
+    <string name="txt_description_value">Pago en gasolinera</string>
+    <string name="in">In</string>
+    <string name="out">out</string>
+    <string name="floatingactionbutton">floatingActionButton</string>
 </resources>
