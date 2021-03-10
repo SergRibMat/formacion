@@ -9,8 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import com.atsistemas.myapplication.R
 import com.atsistemas.myapplication.commons.BaseActivity
+import com.atsistemas.myapplication.home_activity.home.vm.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : BaseActivity() {
+
+    private val presenterHomeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,7 @@ class HomeActivity : BaseActivity() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+            presenterHomeViewModel.loadTransactions()
         }
     }
 

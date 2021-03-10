@@ -10,8 +10,8 @@ import com.atsistemas.myapplication.databinding.ItemTransactionBinding
 /**
  * Created by Juan Manuel Rincón on 3/9/21.
  */
-class TransactionAdapter(private val mValues: List<TransactionDTO>,
-                            private val cellClickListener: CellClickListener
+class TransactionAdapter(private var mValues: List<TransactionDTO>?,
+                         private val cellClickListener: CellClickListener
                             ): RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     private lateinit var binding: ItemTransactionBinding
@@ -47,11 +47,11 @@ class TransactionAdapter(private val mValues: List<TransactionDTO>,
             holder.itemView.setOnClickListener { _ ->
                 cellClickListener.onCellClickListener(it[position])
             }
-        }
+        } ?: clearList()
     }
 
     override fun getItemCount(): Int {
-        return mValues.size
+        return mValues?.size ?: 0
     }
 
     inner class ViewHolder (mView: View): RecyclerView.ViewHolder(mView){
@@ -65,6 +65,12 @@ class TransactionAdapter(private val mValues: List<TransactionDTO>,
         override fun toString(): String {
             return super.toString() + " '" + tvDate.text + "'"
         }
+    }
+
+    private fun clearList() {
+        val emptyList = listOf<TransactionDTO>()
+        mValues = emptyList
+        notifyItemRangeRemoved(0, 0)
     }
 }
 

@@ -11,6 +11,7 @@ import com.atsistemas.data.models.TransactionDTO
 import com.atsistemas.myapplication.commons.BaseFragment
 import com.atsistemas.myapplication.databinding.HomeFragmentBinding
 import com.atsistemas.myapplication.home_activity.home.vm.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -34,20 +35,25 @@ class HomeFragment: BaseFragment(), CellClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadObservers()
+        presenter.fetchTransactions()
     }
 
 
     private fun loadObservers(){
-        presenter.transactionList.observe(viewLifecycleOwner, {
+        presenter.transactionsList.observe(viewLifecycleOwner, {
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
             adapter = TransactionAdapter(it, this)
             binding.recyclerView.adapter = adapter
+//            it?.let {
+//                presenter.saveTransactions(it)
+//            }
         })
     }
 
 
     override fun onCellClickListener(transaction: TransactionDTO) {
-        Toast.makeText(activity, transaction.description, Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "clearing...", Toast.LENGTH_LONG).show()
+        presenter.clearList()
     }
 
     override fun onDestroyView() {

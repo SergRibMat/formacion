@@ -2,12 +2,12 @@ package com.atsistemas.data.di.providers
 
 import android.app.Application
 import com.atsistemas.data.BuildConfig
+import com.atsistemas.data.local.BankDatabase
 import com.atsistemas.data.remote.ITransactionAPI
 import com.atsistemas.data.remote.interceptors.MockInterceptor
 import com.atsistemas.data.repositories.TransactionRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -53,4 +53,8 @@ fun provideRetrofit(httpClient: OkHttpClient, gson: Gson): Retrofit = Retrofit.B
 fun provideTransactionApi (retrofit: Retrofit): ITransactionAPI = retrofit
         .create(ITransactionAPI::class.java)
 
-fun provideTransactionRepository(retrofit: ITransactionAPI): TransactionRepository = TransactionRepository(retrofit)
+fun provideBankDatabase(application: Application): BankDatabase {
+    return BankDatabase.getInstance(application)
+}
+
+fun provideTransactionRepository(retrofit: ITransactionAPI, bankDB: BankDatabase): TransactionRepository = TransactionRepository(retrofit, bankDB)

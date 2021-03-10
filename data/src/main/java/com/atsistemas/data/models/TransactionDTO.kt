@@ -1,13 +1,18 @@
 package com.atsistemas.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.atsistemas.data.commons.Constants
+
 /**
  * Created by Juan Manuel Rincón on 3/9/21.
  */
+@Entity(tableName = Constants.TABLE_TRANSACTIONS)
 data class TransactionDTO(
-        val id: String,
+        @PrimaryKey val id: String,
         val date: String,
         val amount: String,
         val description: String?,
         val fee: String?,
-        val total: String
+        val total: String?
 )

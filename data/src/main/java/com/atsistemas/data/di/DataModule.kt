@@ -12,6 +12,7 @@ val dataModule = module {
     single { provideMockInterceptor(get()) }
     single { provideGson()}
     single { provideRetrofit( get(), get())}
-    single { provideTransactionApi( get())}
-    single { provideTransactionRepository( get() )}
+    single { provideTransactionApi( get() )}
+    single { provideBankDatabase( get() ) }
+    single { provideTransactionRepository( get(), get() )}
 }

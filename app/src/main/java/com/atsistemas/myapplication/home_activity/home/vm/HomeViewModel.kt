@@ -14,15 +14,35 @@ import kotlinx.coroutines.launch
  */
 class HomeViewModel(private val repository: TransactionRepository): BaseViewModel() {
 
-    private var _transacionList = MutableLiveData<MutableList<TransactionDTO>>()
-    val transactionList: LiveData<MutableList<TransactionDTO>>
-        get() = _transacionList
+//    private val _transacionList = MutableLiveData<MutableList<TransactionDTO>>()
+//    val transactionList: LiveData<MutableList<TransactionDTO>>
+//        get() = _transacionList
+
+    val transactionsList: LiveData<List<TransactionDTO>> = repository.mTransactions
 
 
     fun fetchTransactions(){
         viewModelScope.launch (Dispatchers.IO) {
-            _transacionList.postValue(repository.getTransactions() as MutableList<TransactionDTO>)
+//            _transacionList.postValue(repository.getTransactions() as MutableList<TransactionDTO>)
+            repository.getTransactionsAndSave()
         }
+    }
+
+    fun saveTransactions(transactions: List<TransactionDTO>){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.saveTransactions(transactions)
+        }
+    }
+
+    fun loadTransactions(){
+        viewModelScope.launch (Dispatchers.IO){
+            _transacionList.postValue(repository.loadTransactions() as MutableList<TransactionDTO>)
+        }
+    }
+
+    fun clearList(){
+        val transactionsListEmpty = MutableLiveData<MutableList<TransactionDTO>>()
+        _transacionList.value = transactionsListEmpty.value
     }
 
 }
