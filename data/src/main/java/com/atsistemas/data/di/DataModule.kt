@@ -1,7 +1,6 @@
 package com.atsistemas.data.di
 
-import com.atsistemas.data.di.providers.provideMockInterceptor
-import com.atsistemas.data.di.providers.provideOkHttpClient
+import com.atsistemas.data.di.providers.*
 import org.koin.dsl.module
 
 /**
@@ -11,5 +10,8 @@ import org.koin.dsl.module
 val dataModule = module {
     single { provideOkHttpClient(get()) }
     single { provideMockInterceptor(get()) }
-    //rellenar
+    single { provideGson()}
+    single { provideRetrofit( get(), get())}
+    single { provideTransactionApi( get())}
+    single { provideTransactionRepository( get() )}
 }

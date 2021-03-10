@@ -3,6 +3,7 @@ package com.atsistemas.data.di.providers
 import android.app.Application
 import com.atsistemas.data.BuildConfig
 import com.atsistemas.data.remote.ITransactionAPI
+import com.atsistemas.data.remote.interceptors.MockInterceptor
 import com.atsistemas.data.repositories.TransactionRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -43,13 +44,13 @@ fun provideGson(): Gson {
             .create()
 }
 
-fun getRetrofit(httpClient: OkHttpClient, gson: Gson): Retrofit = Retrofit.Builder()
+fun provideRetrofit(httpClient: OkHttpClient, gson: Gson): Retrofit = Retrofit.Builder()
         .client(httpClient)
         .baseUrl(BuildConfig.BaseURL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-fun getTransactionApi (retrofit: Retrofit): ITransactionAPI = retrofit
+fun provideTransactionApi (retrofit: Retrofit): ITransactionAPI = retrofit
         .create(ITransactionAPI::class.java)
 
-fun getTransactionRepository(retrofit: ITransactionAPI): TransactionRepository = TransactionRepository(retrofit)
+fun provideTransactionRepository(retrofit: ITransactionAPI): TransactionRepository = TransactionRepository(retrofit)
