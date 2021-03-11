@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.atsistemas.data.models.TransactionDTO
+import com.atsistemas.data.remote.ResultHandler
 import com.atsistemas.data.repositories.TransactionRepository
 import com.atsistemas.myapplication.commons.BaseViewModel
+import com.atsistemas.myapplication.commons.Constants.NETWORK_ERROR
+import com.atsistemas.myapplication.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -14,17 +17,27 @@ import kotlinx.coroutines.launch
  */
 class HomeViewModel(private val repository: TransactionRepository): BaseViewModel() {
 
-//    private val _transacionList = MutableLiveData<MutableList<TransactionDTO>>()
-//    val transactionList: LiveData<MutableList<TransactionDTO>>
-//        get() = _transacionList
 
     val transactionsList: LiveData<List<TransactionDTO>> = repository.mTransactions
 
+    private var _showMessage = SingleLiveEvent<String>()
+    val showMessage: LiveData<String>
+        get() = _showMessage
+
+    private var _showError = SingleLiveEvent<String>()
+    val showError: LiveData<String>
+        get() = _showError
 
     fun fetchTransactions(){
         viewModelScope.launch (Dispatchers.IO) {
-//            _transacionList.postValue(repository.getTransactions() as MutableList<TransactionDTO>)
-            repository.getTransactionsAndSave()
+            when (val result = repository.getTransactionsAndSave()){
+                is ResultHandler.Success -> {
+                    showMessage(result.data)
+                }
+                else -> {
+                    setShowError(result)
+                }
+            }
         }
     }
 
@@ -34,15 +47,32 @@ class HomeViewModel(private val repository: TransactionRepository): BaseViewMode
         }
     }
 
-    fun loadTransactions(){
+
+    fun clearList(){
         viewModelScope.launch (Dispatchers.IO){
-            _transacionList.postValue(repository.loadTransactions() as MutableList<TransactionDTO>)
+            repository.deleteTransactions()
         }
     }
 
-    fun clearList(){
-        val transactionsListEmpty = MutableLiveData<MutableList<TransactionDTO>>()
-        _transacionList.value = transactionsListEmpty.value
+    fun showMessage(text: String){
+        _showMessage.postValue(text)
+    }
+
+    fun setShowError(resultHandler: ResultHandler<Any>){
+        when (resultHandler){
+            is ResultHandler.NetworkError -> {
+                _showError.postValue(NETWORK_ERROR)
+            }
+            is ResultHandler.HttpError -> {
+                _showError.postValue("${resultHandler.code!!}")
+            }
+            is ResultHandler.GenericError -> {
+                _showError.postValue(resultHandler.message!!)
+            }
+            else -> {
+                _showError.postValue(NETWORK_ERROR)
+            }
+        }
     }
 
 }

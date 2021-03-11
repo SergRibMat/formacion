@@ -5,4 +5,7 @@ package com.atsistemas.myapplication.commons
  */
 object Constants {
     const val LOADING_SLEEP: Long = 2000
+
+    //Errors
+    const val NETWORK_ERROR = "Network Error"
 }

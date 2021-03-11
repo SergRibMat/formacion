@@ -18,4 +18,7 @@ interface TransactionDao {
 
     @Query("SELECT * FROM `$TABLE_TRANSACTIONS`")
     fun load(): LiveData<List<TransactionDTO>>
+
+    @Query("DELETE FROM `$TABLE_TRANSACTIONS`")
+    fun deleteAll()
 }

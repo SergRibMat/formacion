@@ -99,4 +99,8 @@
     <string name="in">In</string>
     <string name="out">out</string>
     <string name="floatingactionbutton">floatingActionButton</string>
+
+    <string name="accept">Aceptar</string>
+    <string name="alert">AVISO</string>
+    <string name="close">Cerrar</string>
 </resources>

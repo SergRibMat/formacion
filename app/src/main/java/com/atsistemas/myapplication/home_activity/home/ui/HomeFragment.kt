@@ -8,7 +8,9 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atsistemas.data.models.TransactionDTO
+import com.atsistemas.myapplication.R
 import com.atsistemas.myapplication.commons.BaseFragment
+import com.atsistemas.myapplication.commons.uicomponents.ErrorDialog
 import com.atsistemas.myapplication.databinding.HomeFragmentBinding
 import com.atsistemas.myapplication.home_activity.home.vm.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -19,12 +21,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class HomeFragment: BaseFragment(), CellClickListener {
 
-    private val presenter: HomeViewModel by viewModel()
+    private val presenter: HomeViewModel by sharedViewModel()
 
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: TransactionAdapter
+
+    var errorDialog : ErrorDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
@@ -35,7 +39,7 @@ class HomeFragment: BaseFragment(), CellClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadObservers()
-        presenter.fetchTransactions()
+
     }
 
 
@@ -44,9 +48,25 @@ class HomeFragment: BaseFragment(), CellClickListener {
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
             adapter = TransactionAdapter(it, this)
             binding.recyclerView.adapter = adapter
-//            it?.let {
-//                presenter.saveTransactions(it)
-//            }
+        })
+
+        presenter.showMessage.observe(viewLifecycleOwner, {
+            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+        })
+
+        presenter.showError.observe(viewLifecycleOwner,{
+            errorDialog = activity?.let { activity ->
+                ErrorDialog(
+                        activity,
+                        getString(R.string.alert),
+                        it,
+                        getString(R.string.close)
+                ) {
+                    errorDialog?.dismiss()
+                }
+            }
+            errorDialog!!.setCancelable(false)
+            errorDialog!!.show()
         })
     }
 

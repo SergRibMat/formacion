@@ -1,6 +1,7 @@
 package com.atsistemas.data.remote
 
 import com.atsistemas.data.models.TransactionDTO
+import retrofit2.Response
 import retrofit2.http.GET
 
 /**
@@ -8,5 +9,5 @@ import retrofit2.http.GET
  */
 interface ITransactionAPI {
     @GET("/transactions.json")
-    suspend fun getTransactions(): List<TransactionDTO>
+    suspend fun getTransactions(): Response<List<TransactionDTO>>
 }

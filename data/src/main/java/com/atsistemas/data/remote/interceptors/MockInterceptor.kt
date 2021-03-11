@@ -25,7 +25,7 @@ class MockInterceptor(private val application: Application) : Interceptor {
         // TRANSACTIONS
         if (res == null) res =
 
-                getMockResponse("/transactions.json", R.raw.transactions, chain, responseCodeOK)
+                getMockResponse("/transactions.json", R.raw.transactions, chain, responseCodeError)
 
         return res ?: chain.proceed(chain.request())
     }
