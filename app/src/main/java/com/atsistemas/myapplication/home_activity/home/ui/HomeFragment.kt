@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atsistemas.data.models.TransactionDTO
 import com.atsistemas.myapplication.R
@@ -13,6 +14,7 @@ import com.atsistemas.myapplication.commons.BaseFragment
 import com.atsistemas.myapplication.commons.uicomponents.ErrorDialog
 import com.atsistemas.myapplication.databinding.HomeFragmentBinding
 import com.atsistemas.myapplication.home_activity.home.vm.HomeViewModel
+import com.atsistemas.myapplication.utils.SharedTransactionVM
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,6 +24,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment: BaseFragment(), CellClickListener {
 
     private val presenter: HomeViewModel by sharedViewModel()
+    private val sharedTransactionVM: SharedTransactionVM by sharedViewModel()
+
 
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
@@ -77,8 +81,9 @@ class HomeFragment: BaseFragment(), CellClickListener {
 
 
     override fun onCellClickListener(transaction: TransactionDTO) {
-        Toast.makeText(activity, "clearing...", Toast.LENGTH_LONG).show()
-        presenter.clearList()
+        Toast.makeText(activity,"Cell: ${transaction.description}", Toast.LENGTH_SHORT).show()
+        sharedTransactionVM.setTransaction(transaction)
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment)
     }
 
     override fun onDestroyView() {
