@@ -28,7 +28,7 @@ class HomeFragment: BaseFragment(), CellClickListener {
 
     private lateinit var adapter: TransactionAdapter
 
-    var errorDialog : ErrorDialog? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = HomeFragmentBinding.inflate(inflater, container, false)
@@ -38,12 +38,10 @@ class HomeFragment: BaseFragment(), CellClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadObservers()
-
     }
 
 
-    private fun loadObservers(){
+    override fun loadObservers(){
         presenter.transactionsList.observe(viewLifecycleOwner, {
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
             adapter = TransactionAdapter(it, this)
@@ -67,6 +65,13 @@ class HomeFragment: BaseFragment(), CellClickListener {
             }
             errorDialog!!.setCancelable(false)
             errorDialog!!.show()
+        })
+        presenter.isLoading.observe(viewLifecycleOwner,{
+            if (it){
+                binding.progressBar.visibility = View.VISIBLE
+            }else{
+                binding.progressBar.visibility = View.GONE
+            }
         })
     }
 

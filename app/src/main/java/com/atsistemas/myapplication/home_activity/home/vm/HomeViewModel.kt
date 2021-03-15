@@ -20,15 +20,9 @@ class HomeViewModel(private val repository: TransactionRepository): BaseViewMode
 
     val transactionsList: LiveData<List<TransactionDTO>> = repository.mTransactions
 
-    private var _showMessage = SingleLiveEvent<String>()
-    val showMessage: LiveData<String>
-        get() = _showMessage
-
-    private var _showError = SingleLiveEvent<String>()
-    val showError: LiveData<String>
-        get() = _showError
 
     fun fetchTransactions(){
+        _isLoading.value = true
         viewModelScope.launch (Dispatchers.IO) {
             when (val result = repository.getTransactionsAndSave()){
                 is ResultHandler.Success -> {
@@ -38,12 +32,7 @@ class HomeViewModel(private val repository: TransactionRepository): BaseViewMode
                     setShowError(result)
                 }
             }
-        }
-    }
-
-    fun saveTransactions(transactions: List<TransactionDTO>){
-        viewModelScope.launch (Dispatchers.IO){
-            repository.saveTransactions(transactions)
+            _isLoading.postValue(false)
         }
     }
 
@@ -54,25 +43,6 @@ class HomeViewModel(private val repository: TransactionRepository): BaseViewMode
         }
     }
 
-    fun showMessage(text: String){
-        _showMessage.postValue(text)
-    }
 
-    fun setShowError(resultHandler: ResultHandler<Any>){
-        when (resultHandler){
-            is ResultHandler.NetworkError -> {
-                _showError.postValue(NETWORK_ERROR)
-            }
-            is ResultHandler.HttpError -> {
-                _showError.postValue("${resultHandler.code!!}")
-            }
-            is ResultHandler.GenericError -> {
-                _showError.postValue(resultHandler.message!!)
-            }
-            else -> {
-                _showError.postValue(NETWORK_ERROR)
-            }
-        }
-    }
 
 }

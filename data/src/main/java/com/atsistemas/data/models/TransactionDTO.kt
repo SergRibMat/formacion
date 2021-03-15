@@ -9,10 +9,10 @@ import com.atsistemas.data.commons.Constants
  */
 @Entity(tableName = Constants.TABLE_TRANSACTIONS)
 data class TransactionDTO(
-        @PrimaryKey val id: String,
-        val date: String,
-        val amount: String,
-        val description: String?,
-        val fee: String?,
-        val total: String?
+    @PrimaryKey val id: String,
+    var date: String,
+    val amount: String,
+    val description: String?,
+    val fee: String?,
+    var total: String?
 )
