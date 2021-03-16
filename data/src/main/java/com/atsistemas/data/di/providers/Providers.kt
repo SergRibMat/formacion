@@ -2,27 +2,19 @@ package com.atsistemas.data.di.providers
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-import android.graphics.drawable.Icon
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
 import com.atsistemas.data.BuildConfig
 import com.atsistemas.data.local.BankDatabase
+import com.atsistemas.data.local.ProfileDataStore
 import com.atsistemas.data.remote.ITransactionAPI
 import com.atsistemas.data.remote.interceptors.MockInterceptor
 import com.atsistemas.data.repositories.TransactionRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import java.util.prefs.Preferences
-import kotlin.properties.ReadOnlyProperty
 
 /**
  * Created by Juan Manuel Rincón on 3/9/21.
@@ -67,7 +59,15 @@ fun provideBankDatabase(application: Application): BankDatabase {
     return BankDatabase.getInstance(application)
 }
 
-fun provideTransactionRepository(retrofit: ITransactionAPI, bankDB: BankDatabase): TransactionRepository = TransactionRepository(retrofit, bankDB)
+fun provideProfileDataStore(context: Context): ProfileDataStore = ProfileDataStore(context)
+
+fun provideTransactionRepository(retrofit: ITransactionAPI,
+                                 bankDB: BankDatabase,
+                                 profileDataStore: ProfileDataStore
+): TransactionRepository = TransactionRepository(retrofit,
+        bankDB,
+        profileDataStore
+)
 
 
 

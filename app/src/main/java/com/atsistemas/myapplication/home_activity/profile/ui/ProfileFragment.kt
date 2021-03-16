@@ -37,13 +37,25 @@ class ProfileFragment: BaseFragment() {
 
     override fun loadObservers() {
 
-        presenter.profileData.observe(viewLifecycleOwner, {
+        /*presenter.profileData.observe(viewLifecycleOwner, {
             if (it != null) {
                 binding.tvName.text = "Name: ${it.name}"
                 binding.tvSurname.text = "Surname: ${it.surname}"
                 Toast.makeText(context, "${it.name}", Toast.LENGTH_SHORT).show()
             }
+        })*/
 
+        presenter.profileDataName.observe(viewLifecycleOwner, {
+            if (it != null) {
+                binding.tvName.text = "Name: $it"
+
+            }
+        })
+
+        presenter.profileDataSurname.observe(viewLifecycleOwner, {
+            if (it != null) {
+                binding.tvSurname.text = "Surname: $it"
+            }
         })
     }
 
