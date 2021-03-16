@@ -6,4 +6,5 @@ package com.atsistemas.data.commons
 object Constants {
     const val DATABASE_NAME = "bank_db"
     const val TABLE_TRANSACTIONS = "transaction"
+    const val TABLE_PROFILEDATA = "profiledata"
 }

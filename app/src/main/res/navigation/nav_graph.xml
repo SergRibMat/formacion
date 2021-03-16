@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/MenuFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -17,9 +17,32 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.atsistemas.myapplication.home_activity.detail.ui.DetailFragment"
-        android:label="DetailFragment" >
+        android:label="DetailFragment"
+        tools:layout="@layout/detail_fragment">
         <action
             android:id="@+id/action_detailFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.atsistemas.myapplication.home_activity.profile.ui.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/profile_fragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/MenuFragment"
+        android:name="com.atsistemas.myapplication.home_activity.menu.ui.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/menu_fragment">
+
+        <action
+            android:id="@+id/action_MenuFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_MenuFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

@@ -5,12 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.atsistemas.data.commons.Constants.DATABASE_NAME
+import com.atsistemas.data.models.ProfileData
 import com.atsistemas.data.models.TransactionDTO
 
 /**
  * Created by Juan Manuel Rincón on 3/10/21.
  */
-@Database(entities = [TransactionDTO::class], version = 1)
+@Database(entities = [TransactionDTO::class, ProfileData::class], version = 2)
 abstract class BankDatabase: RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
 

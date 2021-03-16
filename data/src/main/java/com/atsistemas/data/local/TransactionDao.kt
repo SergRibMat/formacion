@@ -5,7 +5,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.atsistemas.data.commons.Constants.TABLE_PROFILEDATA
 import com.atsistemas.data.commons.Constants.TABLE_TRANSACTIONS
+import com.atsistemas.data.models.ProfileData
 import com.atsistemas.data.models.TransactionDTO
 
 /**
@@ -21,4 +23,12 @@ interface TransactionDao {
 
     @Query("DELETE FROM `$TABLE_TRANSACTIONS`")
     fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveProfileData(profileData: ProfileData)
+
+    @Query("SELECT * FROM `$TABLE_PROFILEDATA` LIMIT 1")
+    fun loadProfileData(): LiveData<ProfileData>
+
+
 }

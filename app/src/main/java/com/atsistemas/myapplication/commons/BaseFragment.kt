@@ -14,9 +14,12 @@ abstract class BaseFragment: Fragment() {
 
     abstract fun loadObservers()
 
+    abstract fun loadButtonListeners()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadObservers()
+        loadButtonListeners()
     }
 
 

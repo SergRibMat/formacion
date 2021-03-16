@@ -48,5 +48,9 @@ class DetailFragment: BaseFragment() {
     override fun loadObservers() {
     }
 
+    override fun loadButtonListeners() {
+
+    }
+
 
 }

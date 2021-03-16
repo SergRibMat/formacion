@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.atsistemas.data.models.TransactionDTO
@@ -42,6 +43,7 @@ class HomeFragment: BaseFragment(), CellClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //presenter.fetchTransactions()
     }
 
 
@@ -77,6 +79,10 @@ class HomeFragment: BaseFragment(), CellClickListener {
                 binding.progressBar.visibility = View.GONE
             }
         })
+    }
+
+    override fun loadButtonListeners() {
+
     }
 
 
